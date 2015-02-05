@@ -50,7 +50,8 @@
     slides.innerHTML = gist.responseText;
 
     /* LOAD slide-pack now. Content had to be loaded before it is processed - Alternative: A hook in slide-pack */
-    new Loader().require(['slide-pack.js']);
+    /* Loading it from rawgit using the dev/testing alternative. TODO: Change it to a production one */
+    new Loader().require(['https://rawgit.com/trabe/slide-pack/gh-pages/slide-pack.js']);
   };
 
   /* Actually do the request. */
