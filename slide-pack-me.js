@@ -1,59 +1,46 @@
-/* LOAD javascript when we want */
+/* Spagetti code for SlidePackMe */
 (function(){
-  var Loader = function () {};
 
-  Loader.prototype = {
-    require: function (scripts, callback) {
-      this.loadCount      = 0;
-      this.totalRequired  = scripts.length;
-      this.callback       = callback;
+  /* CONFIG */
+  /* We should load everything from the same domine to avoid "Content-Security-Policy" errors */
+  /* TODO: check wether the md is on rawgit/github and get the appropiate file */
+  /* Workaround: http://stackoverflow.com/questions/7607605/does-content-security-policy-block-bookmarklets */  
+  var rawgit_url    = 'https://rawgit.com'
+  var slidepack_js  = '/trabe/slide-pack/gh-pages/slide-pack.js';
+  var slidepack_css = '/trabe/slide-pack/gh-pages/slide-pack.css';
 
-      for (var i = 0; i < scripts.length; i++) {
-        this.writeScript(scripts[i]);
-      }
-    },
-    loaded: function (evt) {
-      this.loadCount++;
+  /* Create the Slide Pack container 'textarea'/xmp/etc. Returns the element */
+  /* TODO: scrap md file to check wich container to use */
+  var slidePackContainer = function(element_name, markdown){
+    element_name = typeof element_name !== 'undefined' ? element_name : 'textarea';
 
-      if (this.loadCount == this.totalRequired && typeof this.callback == 'function') this.callback.call();
-    },
-    writeScript: function (src) {
-      var self = this;
-      var s = document.createElement('script', 'data-cosa-de-mierda');
-      s.type = "text/javascript";
-      s.async = true;
-      s.src = src;
-      s.addEventListener('load', function (e) { self.loaded(e); }, false);
-      var head = document.getElementsByTagName('head')[0];
-      head.appendChild(s);
-    }
-  }
-
-
-  /* Create the Slide Pack container 'textarea'/xmp/etc */
-  var insertSlidePackContainer = function(element_name){
-    var slide_pack_container = document.createElement(element_name); /* TODO: select the most appropiate one */
+    var slide_pack_container = document.createElement(element_name);
     slide_pack_container.dataset.slidePack = true;
-    document.body.appendChild(slide_pack_container);
+    slide_pack_container.innerHTML = markdown;
+
     return slide_pack_container; 
   }
 
-  /* Get the gist */
-  var gist = new XMLHttpRequest();
-  gist.open("GET", "https://gist.githubusercontent.com/andion/44f626e88cc1f39b7495/raw/657c7abe226706cc13dd2ef280dd0e3fc445c8b5/sample_slides.md", true);
-  gist.onreadystatechange = function () {
-    if (gist.readyState != 4 || gist.status != 200) return;
-    
-    var slides = insertSlidePackContainer('textarea');
+  /* "MAIN" */
+  /* Insert slidepack css */
+  var sieses = document.createElement('link');
+  sieses.setAttribute('rel', 'stylesheet');
+  sieses.setAttribute('type','text/css');
+  sieses.setAttribute('href', rawgit_url + slidepack_css);
+  document.head.appendChild(sieses);
+  /* Replace the raw_markdown to the slide-pack container with the markdown */
 
-    /* Get the response and set is as the textarea's innerHtml */
-    slides.innerHTML = gist.responseText;
+  var raw_markdown_element = document.body.getElementsByTagName('pre')[0];
+  var slide_pack_element   = slidePackContainer('textarea', raw_markdown_element.innerHTML)  
+  document.body.replaceChild(slide_pack_element, raw_markdown_element);
 
-    /* LOAD slide-pack now. Content had to be loaded before it is processed - Alternative: A hook in slide-pack */
-    /* Loading it from rawgit using the dev/testing alternative. TODO: Change it to a production one */
-    new Loader().require(['https://rawgit.com/trabe/slide-pack/gh-pages/slide-pack.js']);
-  };
+  /* Now insert slidepack js */
 
-  /* Actually do the request. */
-  gist.send();
+  var jeies = document.createElement('script');
+  jeies.rel = 'stylesheet';
+  jeies.type = 'text/javascript';
+  jeies.async = true;
+  jeies.src = rawgit_url + slidepack_js;
+
+  document.body.appendChild(jeies);
 }());
