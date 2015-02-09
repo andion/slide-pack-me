@@ -1,0 +1,10 @@
+#!/usr/bin/env ruby
+# encoding: UTF-8
+
+# Converts ./slide-pack-me.js to /dist/slide-pack-me-bookmarklet
+
+require 'uglifier'
+ 
+File.open("dist/slide-pack-me-bookmarklet", "w") do |file| 
+    file.write 'javascript:' + Uglifier.compile(File.read("slide-pack-me.js"))
+end

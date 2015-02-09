@@ -4,10 +4,16 @@ An oldstyle bookmarklet to render any [slidepack](http://trabe.github.io/slide-p
 
 ## Usage
 
-Just drag this to your bookmarks bar or create a new bookmark to 
-```
- javascript:<the contents of slide-pack-me.min.js>
-```
+Just drag /dist/slide-pack-me-bookmarklet to your bookmarks bar or create a new bookmark.
+
+## Modifying
+
+If you change slide-pack-me.js just transform it to a bookmarklet using /util/js_to_bookmarklet:
+
+    bundle install
+    ./util/js_to_bookmarklet
+
+It will re-generate /dist/slide-pack-me-bookmarklet
 
 ## Work in progress
 

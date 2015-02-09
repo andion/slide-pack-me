@@ -34,10 +34,20 @@
   var slide_pack_element   = slidePackContainer('textarea', raw_markdown_element.innerHTML)  
   document.body.replaceChild(slide_pack_element, raw_markdown_element);
 
+
+
+  var jeies1 = document.createElement('script');
+  jeies1.type = 'text/javascript';
+  jeies1.async = true;
+  jeies1.src = 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js';
+
+  document.body.appendChild(jeies1);
+
+  
+
   /* Now insert slidepack js */
 
   var jeies = document.createElement('script');
-  jeies.rel = 'stylesheet';
   jeies.type = 'text/javascript';
   jeies.async = true;
   jeies.src = rawgit_url + slidepack_js;
