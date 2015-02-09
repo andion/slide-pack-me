@@ -28,22 +28,17 @@
   sieses.setAttribute('type','text/css');
   sieses.setAttribute('href', rawgit_url + slidepack_css);
   document.head.appendChild(sieses);
-  /* Replace the raw_markdown to the slide-pack container with the markdown */
 
+  /* Replace the raw_markdown element with the slide-pack container with the markdown */
   var raw_markdown_element = document.body.getElementsByTagName('pre')[0];
-  var slide_pack_element   = slidePackContainer('textarea', raw_markdown_element.innerHTML)  
+  var slide_pack_element   = slidePackContainer('textarea', raw_markdown_element.innerHTML);
   document.body.replaceChild(slide_pack_element, raw_markdown_element);
 
+  /* Use slidepack post-processing to init highlightjs */
+  var jailait = document.createElement('script');
+  jailait.innerText = "var _slide_pack_process_slides = function ($slides){hljs.initHighlighting();};";
+  document.body.appendChild(jailait);
 
-
-  var jeies1 = document.createElement('script');
-  jeies1.type = 'text/javascript';
-  jeies1.async = true;
-  jeies1.src = 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js';
-
-  document.body.appendChild(jeies1);
-
-  
 
   /* Now insert slidepack js */
 

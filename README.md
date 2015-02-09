@@ -32,11 +32,12 @@ This is a work in progress and barely a prototype.
 ### TO-DO (apart from bugs)
 
 * Scrap the md file searching for tags. Use as slide-pack container the appropiate tag and avoid errors :)
-* Make a script that generates a /dist/bookmarklet or something instead of a *"hand-made"* minified version.
+* ~~Make a script that generates a /dist/bookmarklet or something instead of a *"hand-made"* minified version.~~
 
 ### Known Bugs
 
-1. It does not load highlightjs for some reason
+1. ~~It does not load highlightjs for some reason~~
+  * Solved by using slide-packs post-processing function inserting it as an inline script.
 
 ## Contributing
 
